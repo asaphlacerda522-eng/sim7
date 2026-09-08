@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Download</title>
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .caixa {
+            width: 500px;
+            background: #222;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .barra {
+            width: 100%;
+            height: 25px;
+            background: #444;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progresso {
+            width: 0%;
+            height: 100%;
+            background: #00cc66;
+        }
+
+        #final,
+        #fim {
+            display: none;
+        }
+
+        #final img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+        }
+
+        .janela {
+            position: absolute;
+            width: 280px;
+            height: 130px;
+            background: black;
+            color: #00ff00;
+            border: 2px solid #aaa;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: monospace;
+            z-index: 10;
+        }
+
+        .titulo {
+            color: white;
+            border-bottom: 1px solid #777;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ETAPA 1: DOWNLOAD -->
+<div class="caixa" id="download">
+    <h2>Baixando arquivo...</h2>
+
+    <div class="barra">
+        <div class="progresso" id="progresso"></div>
+    </div>
+
+    <p id="porcentagem">0%</p>
+</div>
+
+
+<!-- ETAPA 2: MENSAGEM -->
+<div class="caixa" id="final">
+    <h2>Dados salvos com sucesso!</h2>
+
+    <p>Arquivo carregado com sucesso.</p>
+</div>
+
+
+<!-- ETAPA 3: FINAL -->
+<div class="caixa" id="fim">
+    <h1>💀 FIM 💀</h1>
+    <p>Era só uma trolagem!</p>
+</div>
+
+
+<script>
+
+    /* =========================
+       CARREGAMENTO
+       ========================= */
+
+    let porcentagem = 0;
+
+    let intervalo = setInterval(function() {
+
+        porcentagem++;
+
+        document.getElementById("progresso").style.width =
+            porcentagem + "%";
+
+        document.getElementById("porcentagem").textContent =
+            porcentagem + "%";
+
+        if (porcentagem >= 100) {
+
+            clearInterval(intervalo);
+
+            document.getElementById("download").style.display =
+                "none";
+
+            document.getElementById("final").style.display =
+                "block";
+
+            // Espera 3 segundos
+            setTimeout(iniciarJanelas, 700);
+        }
+
+    }, 10);
+
+
+    /* =========================
+       JANELAS FALSAS
+       ========================= */
+
+    function iniciarJanelas() {
+
+        document.getElementById("final").style.display =
+            "none";
+
+        let numero = 0;
+
+        let intervaloJanelas = setInterval(function() {
+
+            numero++;
+
+            let janela = document.createElement("div");
+
+            janela.className = "janela";
+
+            janela.innerHTML = `
+                <div class="titulo">Sistema</div>
+                <p>⚠ Processando...</p>
+                <p>Janela ${numero}</p>
+            `;
+
+            janela.style.left =
+                Math.random() *
+                (window.innerWidth - 300) + "px";
+
+            janela.style.top =
+                Math.random() *
+                (window.innerHeight - 150) + "px";
+
+            document.body.appendChild(janela);
+
+
+            // A janela falsa desaparece
+            setTimeout(function() {
+                janela.remove();
+            }, 700);
+
+
+            // Depois de 30 janelas termina
+            if (numero >= 30) {
+
+                clearInterval(intervaloJanelas);
+
+                setTimeout(function() {
+
+                    document.getElementById("fim").style.display =
+                        "block";
+
+                }, 1000);
+            }
+
+        }, 150);
+    }
+
+</script>
+
+</body>
+</html>
+```
