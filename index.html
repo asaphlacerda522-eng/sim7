@@ -200,7 +200,34 @@
 </body>
 </html>
 ```
-@echo off
-for /l %%i in (10,10,50) do (
-    start cmd /c "echo Janela %%i & timeout /t 1 >nul"
-)
+<script>
+let numero = 10;
+
+let intervalo = setInterval(() => {
+    let janela = document.createElement("div");
+
+    janela.style.position = "absolute";
+    janela.style.left = Math.random() * (window.innerWidth - 250) + "px";
+    janela.style.top = Math.random() * (window.innerHeight - 100) + "px";
+    janela.style.width = "230px";
+    janela.style.padding = "15px";
+    janela.style.background = "black";
+    janela.style.color = "#00ff00";
+    janela.style.fontFamily = "monospace";
+    janela.style.border = "2px solid white";
+
+    janela.textContent = "Janela " + numero;
+
+    document.body.appendChild(janela);
+
+    setTimeout(() => {
+        janela.remove();
+    }, 1000);
+
+    numero += 10;
+
+    if (numero > 50) {
+        clearInterval(intervalo);
+    }
+}, 1000);
+</script>
